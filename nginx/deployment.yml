@@ -1,0 +1,8 @@
+# Deployment gives you reliability, scalability, and easier updates.
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nginx-deployment
+  namespace: nginx
+
+spec:
