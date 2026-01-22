@@ -1,0 +1,28 @@
+# DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx-daemonsets
+  namespace: nginx
+  labels:
+    app: nginx
+
+spec:
+  # replicas is not user in DaemonSet as it runs one pod per node by default 
+
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      name: nginx-daemon-pod
+      labels:
+        app: nginx
+
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80

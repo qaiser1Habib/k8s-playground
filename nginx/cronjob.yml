@@ -1,0 +1,48 @@
+# - A Cron job runs a scheduled task at a specified schedule. The task runs to completion and then is deleted.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: minute-backup
+  namespace: nginx
+
+spec:
+  # - A scheduled * minute * hour * day-of-month * month * day-of-week
+  schedule: "* * * * *" # This cron expression means every minute
+
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: minute-backup-pod
+          labels:
+            app: minute-backup
+        spec:
+          containers:
+            - name: backup-container
+              image: busybox:latest
+              command:
+                - "sh"
+                - "-c"
+                - >
+                  echo "backup started";
+                  mkdir -p /backups &&
+                  mkdir -p /demo-data &&
+                  cp -r /demo-data /backups/ &&
+                  echo "backup completed";
+              volumeMounts:
+                - name: data-volume
+                  mountPath: /demo-data
+                - name: backup-volume
+                  mountPath: /backups
+          restartPolicy: OnFailure
+          volumes:
+            - name: data-volume
+              hostPath:
+                path: /demo-data
+                type: DirectoryOrCreate
+
+            - name: backup-volume
+              hostPath:
+                path: /backups
+                type: DirectoryOrCreate
+
