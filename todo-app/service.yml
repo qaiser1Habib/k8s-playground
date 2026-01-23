@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-app-service
+  # namespace: todo-app
+  namespace: nginx # using nginx namespace for using ingress to access multiple services
+
+spec:
+  selector:
+    app: todo-app
+  ports:
+    - protocol: TCP
+      port: 5174
+      targetPort: 5174
+
+  type: ClusterIP

@@ -1,0 +1,28 @@
+# Deployment gives you reliability, scalability, and easier updates.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app-deployment
+  # namespace: todo-app
+  namespace: nginx # using nginx namespace for using ingress to access multiple services
+  labels:
+    app: todo-app
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: todo-app
+
+  template:
+    metadata:
+      labels:
+        app: todo-app
+
+    spec:
+      containers:
+        - name: todo-app
+          image: qaiserhabib6/todo-app-k8s
+          ports:
+            - containerPort: 5174

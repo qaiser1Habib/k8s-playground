@@ -1,0 +1,32 @@
+# Ingress gives you a way to expose your services to the outside world. 
+# It also allows you to configure load balancers and other networking features.
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: nginx-todo-ingress
+  namespace: nginx
+  annotations:  # Path rewrite ensures backend sees / instead of /nginx or /app.
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /nginx
+            backend:
+              service:
+                name: nginx-service
+                port:
+                  number: 80
+          
+          - pathType: Prefix
+            path: / 
+            backend:
+              service:
+                name: todo-app-service
+                port:
+                  number: 5174
+              
