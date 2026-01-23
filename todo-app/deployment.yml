@@ -26,3 +26,24 @@ spec:
           image: qaiserhabib6/todo-app-k8s
           ports:
             - containerPort: 5174
+          
+          resources: 
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+
+          # livenessProbe is for health check
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5174
+          
+          # readinessProbe is for check you pod is ready
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5174
+            

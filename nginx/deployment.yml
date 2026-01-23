@@ -29,7 +29,15 @@ spec:
           volumeMounts:
             - mountPath: /var/www/html
               name: my-volume
-      
+          # resources is for to set minimum and maximum cpu and memory usage to prevent pods from using too much resources
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+                  
       volumes:
         - name:  my-volume
           persistentVolumeClaim:

@@ -10,3 +10,13 @@ spec:
     image: nginx:latest
     ports:
       - containerPort: 80
+
+  # Tolerations let this pod run on nodes that have matching taints.
+  # Used when nodes are reserved (prod/gpu/db).
+  # Without this, pod cannot schedule on tainted nodes.
+  
+  # tolerations:
+  #   - key: "prod"
+  #     operator: "Equal"
+  #     value: "true"
+  #     effect: "NoSchedule"
