@@ -1,3 +1,7 @@
+
+# cluster creation instructions
+# kind-cluster % kind create cluster --name kind-cluster --config config.yml 
+
 kind: Deployment
 apiVersion: apps/v1
 metadata:
